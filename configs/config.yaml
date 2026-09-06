@@ -1,0 +1,35 @@
+project:
+  name: "SmartLane AI"
+  version: "2.0.0"
+
+processing:
+  mode: "batch"
+
+video:
+  supported_formats:
+    - ".mp4"
+    - ".mov"
+    - ".avi"
+    - ".mkv"
+    - ".webm"
+
+units:
+  distance: "meters"
+  speed: "mps"
+  acceleration: "mps2"
+  time: "seconds"
+  angle: "degrees"
+
+tracking:
+  confidence_threshold: 0.40
+
+scene:
+  confidence_threshold: 0.40
+
+geometry:
+  minimum_confidence: 0.50
+
+scoring:
+  minimum_confidence_for_penalty: 0.70
+  maximum_score: 1000
+  minimum_score: 0
