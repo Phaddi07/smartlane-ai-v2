@@ -16,3 +16,4 @@ data/output/*
 *.webm
 
 .env
+*.egg-info/
