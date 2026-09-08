@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Optional
+from typing import Any, Optional
 
 
 class VehicleType(str, Enum):
@@ -40,6 +40,31 @@ class ResponsibilityClass(str, Enum):
     INDETERMINATE = "indeterminate"
 
 
+class DriverRating(str, Enum):
+    EXCELLENT = "EXCELLENT"
+    GOOD = "GOOD"
+    MODERATE = "MODERATE"
+    POOR = "POOR"
+    CRITICAL = "CRITICAL"
+
+
+class IncidentType(str, Enum):
+    COLLISION_CANDIDATE = "collision_candidate"
+    NEAR_COLLISION = "near_collision"
+    UNSAFE_FOLLOWING = "unsafe_following"
+    LANE_CONFLICT = "lane_conflict"
+    INTERACTION = "interaction"
+    UNKNOWN = "unknown"
+
+
+class IncidentSeverity(str, Enum):
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    CRITICAL = "critical"
+    UNKNOWN = "unknown"
+
+
 @dataclass
 class VideoMetadata:
     video_id: str
@@ -61,21 +86,6 @@ class FrameState:
 
     width: int
     height: int
-
-
-@dataclass
-class EgoState:
-    frame_number: int
-    timestamp_seconds: float
-
-    speed_mps: Optional[float] = None
-    acceleration_mps2: Optional[float] = None
-    heading_degrees: Optional[float] = None
-
-    lane_id: Optional[int] = None
-    motion_state: MotionState = MotionState.UNKNOWN
-
-    confidence: float = 0.0
 
 
 @dataclass
@@ -117,11 +127,25 @@ class VehicleObservation:
 class VehicleTrack:
     track_id: int
     vehicle_type: VehicleType
+    is_ego: bool = False
 
     observations: list[VehicleObservation] = field(default_factory=list)
 
     first_frame: Optional[int] = None
     last_frame: Optional[int] = None
+
+
+@dataclass
+class LaneBoundaryPoint:
+    x: float
+    y: float
+
+
+@dataclass
+class LaneBoundary:
+    boundary_id: int
+    points: list[LaneBoundaryPoint] = field(default_factory=list)
+    confidence: float = 0.0
 
 
 @dataclass
@@ -132,9 +156,34 @@ class LaneContext:
     lane_count: Optional[int] = None
     ego_lane_id: Optional[int] = None
 
-    lane_boundaries: list = field(default_factory=list)
+    lane_boundaries: list[LaneBoundary] = field(default_factory=list)
 
     confidence: float = 0.0
+
+    evidence: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
+class EgoState:
+    frame_number: int
+    timestamp_seconds: float
+
+    speed_mps: Optional[float] = None
+    acceleration_mps2: Optional[float] = None
+    heading_degrees: Optional[float] = None
+
+    lane_id: Optional[int] = None
+    motion_state: MotionState = MotionState.UNKNOWN
+
+    confidence: float = 0.0
+
+    evidence: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
+class BehaviorSubject:
+    type: str
+    id: Optional[int] = None
 
 
 @dataclass
@@ -142,7 +191,8 @@ class BehaviorEvent:
     event_id: str
     behavior_type: BehaviorType
 
-    subject_id: int
+    subject: BehaviorSubject
+
     start_frame: int
     end_frame: int
 
@@ -152,7 +202,9 @@ class BehaviorEvent:
     magnitude: Optional[float] = None
     confidence: float = 0.0
 
-    evidence: dict = field(default_factory=dict)
+    related_vehicle_ids: list[int] = field(default_factory=list)
+
+    evidence: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -165,7 +217,12 @@ class Interaction:
     start_frame: int
     end_frame: int
 
+    start_time_seconds: Optional[float] = None
+    end_time_seconds: Optional[float] = None
+
     min_distance_m: Optional[float] = None
+    min_normalized_distance: Optional[float] = None
+
     relative_speed_mps: Optional[float] = None
     closing_rate_mps: Optional[float] = None
     time_headway_seconds: Optional[float] = None
@@ -173,7 +230,10 @@ class Interaction:
     interaction_type: Optional[str] = None
 
     confidence: float = 0.0
-    evidence: dict = field(default_factory=dict)
+
+    related_behavior_event_ids: list[str] = field(default_factory=list)
+
+    evidence: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -188,12 +248,15 @@ class Incident:
 
     involved_vehicle_ids: list[int] = field(default_factory=list)
 
-    incident_type: Optional[str] = None
+    incident_type: IncidentType = IncidentType.UNKNOWN
+    severity: IncidentSeverity = IncidentSeverity.UNKNOWN
 
-    severity: Optional[str] = None
-
-    evidence: dict = field(default_factory=dict)
     confidence: float = 0.0
+
+    related_behavior_event_ids: list[str] = field(default_factory=list)
+    related_interaction_ids: list[str] = field(default_factory=list)
+
+    evidence: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -206,7 +269,20 @@ class ResponsibilityAssessment:
 
     reasoning: str
 
-    evidence: dict = field(default_factory=dict)
+    evidence: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
+class ScorePenalty:
+    type: str
+    severity: str
+    points: float
+
+
+@dataclass
+class ScoreEvidence:
+    type: str
+    value: Any
 
 
 @dataclass
@@ -220,12 +296,19 @@ class DriverScore:
     interaction_score: float
     incident_score: float
 
-    evidence: list[dict] = field(default_factory=list)
+    rating: DriverRating = DriverRating.EXCELLENT
+
+    penalties: list[ScorePenalty] = field(default_factory=list)
+    evidence: list[ScoreEvidence] = field(default_factory=list)
 
 
 @dataclass
 class DriverReport:
+    report_id: str
     video_id: str
+    processing_mode: str
+
+    duration_seconds: float
 
     score: DriverScore
 
@@ -236,3 +319,4 @@ class DriverReport:
     )
 
     summary: str = ""
+    generated_at: Optional[str] = None
