@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://smartlane.ai/schemas/lane-geometry.schema.json",
+  "title": "Smartlane Lane Geometry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "frame_number",
+    "timestamp_seconds",
+    "confidence"
+  ],
+  "properties": {
+    "frame_number": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "timestamp_seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "lane_count": {
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "ego_lane_id": {
+      "type": ["integer", "null"]
+    },
+    "lane_boundaries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "boundary_id",
+          "points",
+          "confidence"
+        ],
+        "properties": {
+          "boundary_id": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "points": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["x", "y"],
+              "properties": {
+                "x": { "type": "number" },
+                "y": { "type": "number" }
+              }
+            }
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "evidence": {
+      "type": "object"
+    }
+  }
+}

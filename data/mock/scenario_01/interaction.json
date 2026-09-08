@@ -1,0 +1,23 @@
+{
+  "interaction_id": "INT-001",
+  "ego_vehicle_id": 0,
+  "other_vehicle_id": 24,
+  "start_frame": 180,
+  "end_frame": 235,
+  "start_time_seconds": 8.67,
+  "end_time_seconds": 11.33,
+  "min_distance_m": 2.4,
+  "min_normalized_distance": 0.18,
+  "relative_speed_mps": 5.2,
+  "closing_rate_mps": 5.2,
+  "time_headway_seconds": 0.91,
+  "interaction_type": "closing_then_separating",
+  "confidence": 0.93,
+  "related_behavior_event_ids": [
+    "BE-001"
+  ],
+  "evidence": {
+    "lead_vehicle_id": 24,
+    "progression": "closing_then_separating"
+  }
+}

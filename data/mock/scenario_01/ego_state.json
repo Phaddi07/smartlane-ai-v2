@@ -1,0 +1,14 @@
+{
+  "frame_number": 220,
+  "timestamp_seconds": 10.6,
+  "speed_mps": 11.8,
+  "acceleration_mps2": -4.8,
+  "heading_degrees": 2.1,
+  "lane_id": 2,
+  "motion_state": "decelerating",
+  "confidence": 0.96,
+  "evidence": {
+    "source": "vehicle_tracking",
+    "reason": "Rapid deceleration during interaction with lead vehicle 24."
+  }
+}

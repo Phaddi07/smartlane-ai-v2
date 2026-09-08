@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://smartlane.ai/schemas/driver-score.schema.json",
+  "title": "Smartlane Driver Score",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "score",
+    "following_score",
+    "braking_score",
+    "acceleration_score",
+    "lane_behavior_score",
+    "interaction_score",
+    "incident_score",
+    "rating"
+  ],
+  "properties": {
+    "score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1000
+    },
+    "following_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1000
+    },
+    "braking_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1000
+    },
+    "acceleration_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1000
+    },
+    "lane_behavior_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1000
+    },
+    "interaction_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1000
+    },
+    "incident_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1000
+    },
+    "rating": {
+      "type": "string",
+      "enum": [
+        "EXCELLENT",
+        "GOOD",
+        "MODERATE",
+        "POOR",
+        "CRITICAL"
+      ]
+    },
+    "penalties": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

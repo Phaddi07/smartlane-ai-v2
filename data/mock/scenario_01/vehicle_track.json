@@ -1,0 +1,57 @@
+{
+  "track_id": 24,
+  "vehicle_type": "car",
+  "is_ego": false,
+  "first_frame": 1,
+  "last_frame": 448,
+  "observations": [
+    {
+      "frame_number": 180,
+      "timestamp_seconds": 8.67,
+      "bbox": {
+        "x1": 820,
+        "y1": 390,
+        "x2": 1040,
+        "y2": 610
+      },
+      "confidence": 0.94,
+      "vehicle_type": "car"
+    },
+    {
+      "frame_number": 205,
+      "timestamp_seconds": 9.88,
+      "bbox": {
+        "x1": 835,
+        "y1": 400,
+        "x2": 1055,
+        "y2": 620
+      },
+      "confidence": 0.95,
+      "vehicle_type": "car"
+    },
+    {
+      "frame_number": 220,
+      "timestamp_seconds": 10.6,
+      "bbox": {
+        "x1": 850,
+        "y1": 405,
+        "x2": 1070,
+        "y2": 625
+      },
+      "confidence": 0.96,
+      "vehicle_type": "car"
+    },
+    {
+      "frame_number": 235,
+      "timestamp_seconds": 11.33,
+      "bbox": {
+        "x1": 875,
+        "y1": 415,
+        "x2": 1095,
+        "y2": 635
+      },
+      "confidence": 0.95,
+      "vehicle_type": "car"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "event_id": "BE-001",
+  "behavior_type": "braking",
+  "subject": {
+    "type": "ego",
+    "id": null
+  },
+  "start_frame": 210,
+  "end_frame": 225,
+  "start_time_seconds": 10.12,
+  "end_time_seconds": 10.84,
+  "magnitude": -4.8,
+  "confidence": 0.94,
+  "related_vehicle_ids": [
+    24
+  ],
+  "evidence": {
+    "reason": "Ego vehicle decelerated rapidly while following vehicle 24.",
+    "peak_deceleration_mps2": -4.8,
+    "min_time_headway_seconds": 0.91
+  }
+}

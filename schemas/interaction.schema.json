@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://smartlane.ai/schemas/interaction.schema.json",
+  "title": "Smartlane Vehicle Interaction",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "interaction_id",
+    "ego_vehicle_id",
+    "other_vehicle_id",
+    "start_frame",
+    "end_frame",
+    "confidence"
+  ],
+  "properties": {
+    "interaction_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ego_vehicle_id": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "other_vehicle_id": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "start_frame": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "end_frame": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "start_time_seconds": {
+      "type": ["number", "null"],
+      "minimum": 0
+    },
+    "end_time_seconds": {
+      "type": ["number", "null"],
+      "minimum": 0
+    },
+    "min_distance_m": {
+      "type": ["number", "null"],
+      "minimum": 0
+    },
+    "min_normalized_distance": {
+      "type": ["number", "null"],
+      "minimum": 0
+    },
+    "relative_speed_mps": {
+      "type": ["number", "null"]
+    },
+    "closing_rate_mps": {
+      "type": ["number", "null"]
+    },
+    "time_headway_seconds": {
+      "type": ["number", "null"],
+      "minimum": 0
+    },
+    "interaction_type": {
+      "type": ["string", "null"]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "related_behavior_event_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence": {
+      "type": "object"
+    }
+  }
+}

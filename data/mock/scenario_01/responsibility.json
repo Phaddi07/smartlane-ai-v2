@@ -1,0 +1,11 @@
+{
+  "incident_id": "INC-001",
+  "classification": "pov_primary",
+  "confidence": 0.84,
+  "reasoning": "The ego vehicle approached the lead vehicle too quickly and required hard braking to avoid a collision.",
+  "evidence": {
+    "ego_closing_rate_mps": 5.2,
+    "ego_hard_braking": true,
+    "lead_vehicle_abrupt_action": false
+  }
+}

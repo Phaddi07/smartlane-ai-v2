@@ -1,0 +1,25 @@
+{
+  "incident_id": "INC-001",
+  "start_frame": 205,
+  "end_frame": 228,
+  "start_time_seconds": 9.88,
+  "end_time_seconds": 10.99,
+  "involved_vehicle_ids": [
+    0,
+    24
+  ],
+  "incident_type": "near_collision",
+  "severity": "high",
+  "confidence": 0.91,
+  "related_behavior_event_ids": [
+    "BE-001"
+  ],
+  "related_interaction_ids": [
+    "INT-001"
+  ],
+  "evidence": {
+    "minimum_distance_m": 2.4,
+    "minimum_time_headway_seconds": 0.91,
+    "ego_hard_braking": true
+  }
+}

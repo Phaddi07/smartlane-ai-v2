@@ -1,0 +1,41 @@
+{
+  "score": 850,
+  "following_score": 82,
+  "braking_score": 74,
+  "acceleration_score": 100,
+  "lane_behavior_score": 100,
+  "interaction_score": 86,
+  "incident_score": 82,
+  "rating": "GOOD",
+  "penalties": [
+    {
+      "type": "hard_braking",
+      "severity": "medium",
+      "points": 30
+    },
+    {
+      "type": "unsafe_following",
+      "severity": "medium",
+      "points": 30
+    },
+    {
+      "type": "near_collision",
+      "severity": "high",
+      "points": 90
+    }
+  ],
+  "evidence": [
+    {
+      "type": "starting_score",
+      "value": 1000
+    },
+    {
+      "type": "validated_behavior_events",
+      "value": 1
+    },
+    {
+      "type": "validated_incidents",
+      "value": 1
+    }
+  ]
+}
