@@ -1,0 +1,2 @@
+consolidated_incident_id,accident_track_id,other_track_ids,start_frame,end_frame,duration_frames,interaction_events,peak_iou,peak_iou_frame,min_normalized_distance,min_distance_frame,classifications,trends
+1,125,"14,127",346,362,17,3,0.6019530414865784,362,0.0957011035529472,353,HIGH_INTERACTION|INTERACTION,SEPARATING|STABLE
