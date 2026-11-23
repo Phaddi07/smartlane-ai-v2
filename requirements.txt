@@ -1,5 +1,9 @@
+ultralytics>=8.4,<9
 opencv-python
 numpy
 pandas
 pyyaml
 pytest
+fastapi
+uvicorn[standard]
+python-multipart

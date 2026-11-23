@@ -17,3 +17,7 @@ data/output/*
 
 .env
 *.egg-info/
+
+# Generated analysis outputs
+data/processed/*
+!data/processed/.gitkeep

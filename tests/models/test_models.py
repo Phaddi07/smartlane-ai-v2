@@ -1,5 +1,8 @@
 from smartlane.models import (
     BehaviorEvent,
+    ValidatedBehavior,
+    BehaviorValidationStatus,
+    BehaviorSeverity,
     BehaviorSubject,
     BoundingBox,
     DriverRating,
@@ -44,6 +47,39 @@ def test_vehicle_track_model():
     assert track.observations[0].bbox.width == 220
     assert track.observations[0].bbox.height == 220
 
+def test_validated_behavior_confirmed_mistake():
+    behavior = ValidatedBehavior(
+        event_id="event_001",
+        validation_status=BehaviorValidationStatus.CONFIRMED_MISTAKE,
+        reasoning="Unsafe behaviour established by sufficient evidence.",
+        severity=BehaviorSeverity.MODERATE,
+        penalty_points=0.0,
+    )
+
+    assert behavior.event_id == "event_001"
+    assert behavior.validation_status == BehaviorValidationStatus.CONFIRMED_MISTAKE
+    assert behavior.severity == BehaviorSeverity.MODERATE
+
+
+def test_validated_behavior_inconclusive():
+    behavior = ValidatedBehavior(
+        event_id="event_002",
+        validation_status=BehaviorValidationStatus.INCONCLUSIVE,
+        reasoning="Insufficient evidence.",
+    )
+
+    assert behavior.severity is None
+    assert behavior.penalty_points == 0.0
+
+
+def test_validated_behavior_rejected():
+    behavior = ValidatedBehavior(
+        event_id="event_003",
+        validation_status=BehaviorValidationStatus.REJECTED,
+        reasoning="Candidate was not unsafe.",
+    )
+
+    assert behavior.penalty_points == 0.0
 
 def test_ego_state_model():
     state = EgoState(

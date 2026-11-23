@@ -64,6 +64,17 @@ class IncidentSeverity(str, Enum):
     CRITICAL = "critical"
     UNKNOWN = "unknown"
 
+class BehaviorValidationStatus(str, Enum):
+    CONFIRMED_MISTAKE = "confirmed_mistake"
+    REJECTED = "rejected"
+    INCONCLUSIVE = "inconclusive"
+
+
+class BehaviorSeverity(str, Enum):
+    MINOR = "minor"
+    MODERATE = "moderate"
+    SEVERE = "severe"
+
 
 @dataclass
 class VideoMetadata:
@@ -208,6 +219,15 @@ class BehaviorEvent:
 
 
 @dataclass
+class ValidatedBehavior:
+    event_id: str
+    validation_status: BehaviorValidationStatus
+    reasoning: str
+    severity: Optional[BehaviorSeverity] = None
+    penalty_points: float = 0.0
+    evidence: dict[str, Any] = field(default_factory=dict)
+
+@dataclass
 class Interaction:
     interaction_id: str
 
@@ -287,16 +307,19 @@ class ScoreEvidence:
 
 @dataclass
 class DriverScore:
-    score: float
+    score: float | None = None
 
-    following_score: float
-    braking_score: float
-    acceleration_score: float
-    lane_behavior_score: float
-    interaction_score: float
-    incident_score: float
+    following_score: float | None = None
+    braking_score: float | None = None
+    acceleration_score: float | None = None
+    lane_behavior_score: float | None = None
+    interaction_score: float | None = None
+    incident_score: float | None = None
 
-    rating: DriverRating = DriverRating.EXCELLENT
+    rating: DriverRating | None = None
+
+    evidence_coverage: float = 0.0
+    scoring_status: str = "not_evaluated"
 
     penalties: list[ScorePenalty] = field(default_factory=list)
     evidence: list[ScoreEvidence] = field(default_factory=list)

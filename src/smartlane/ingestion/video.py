@@ -35,18 +35,19 @@ def validate_video_path(video_path: str | Path) -> Path:
 
 def read_video_metadata(video_path: str | Path) -> VideoMetadata:
     path = validate_video_path(video_path)
-
     capture = cv2.VideoCapture(str(path))
 
     if not capture.isOpened():
+        capture.release()
         raise RuntimeError(f"Could not open video: {path}")
 
-    width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
-    height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    fps = float(capture.get(cv2.CAP_PROP_FPS))
-    frame_count = int(capture.get(cv2.CAP_PROP_FRAME_COUNT))
-
-    capture.release()
+    try:
+        width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        fps = float(capture.get(cv2.CAP_PROP_FPS))
+        frame_count = int(capture.get(cv2.CAP_PROP_FRAME_COUNT))
+    finally:
+        capture.release()
 
     if fps <= 0:
         raise ValueError("Video reports an invalid FPS.")
